@@ -39,6 +39,8 @@ REGISTRO-PROYECTO.md
 wp-content/uploads/
 wp-content/upgrade/
 wp-content/cache/
+# Traducciones es_ES descargadas por WordPress (regenerables; solo en ZIP docente)
+wp-content/languages/
 *.log
 
 # Sistema
