@@ -1427,6 +1427,13 @@ button {
 	transition: background var(--transicion);
 }
 
+.toolbar-accesibilidad__sigla {
+	font-size: 1.05rem;
+	font-weight: 800;
+	letter-spacing: 0.03em;
+	line-height: 1;
+}
+
 .toolbar-accesibilidad__boton:hover {
 	background: var(--azul);
 }
@@ -1478,8 +1485,7 @@ html.a11y-letra-1 { font-size: 112%; }
 html.a11y-letra-2 { font-size: 120%; }
 html.a11y-letra-3 { font-size: 132%; }
 
-html.a11y-grises body,
-html.a11y-grises body img {
+html.a11y-grises {
 	filter: grayscale(1) !important;
 }
 
@@ -1496,7 +1502,7 @@ html.a11y-contraste .contacto__info {
 	background: #000;
 }
 
-html.a11y-contraste body,
+html.a11y-contraste,
 html.a11y-contraste p,
 html.a11y-contraste li,
 html.a11y-contraste .cabecera__nav .menu-item a {

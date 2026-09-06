@@ -46,8 +46,8 @@
 	</div>
 </footer>
 
-<button class="toolbar-accesibilidad__boton" id="boton-accesibilidad" aria-expanded="false" aria-controls="panel-accesibilidad">
-	<span aria-hidden="true">&#9841;</span><span class="texto-accesible">Abrir barra de herramientas de accesibilidad</span>
+<button class="toolbar-accesibilidad__boton" id="boton-accesibilidad" aria-expanded="false" aria-controls="panel-accesibilidad" title="Accesibilidad">
+	<span class="toolbar-accesibilidad__sigla" aria-hidden="true">AA</span><span class="texto-accesible">Abrir barra de herramientas de accesibilidad</span>
 </button>
 
 <section class="toolbar-accesibilidad" id="panel-accesibilidad" aria-label="Opciones de accesibilidad" hidden>
