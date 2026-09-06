@@ -1,0 +1,198 @@
+{
+	"info": {
+		"_postman_id": "cdn-santiago-coleccion",
+		"name": "CDN Santiago - Centro de Negocios Sercotec",
+		"description": "Colección para gestionar (CRUD) y consumir la API REST del sitio CDN Santiago. Endpoints propios de lectura: /cdn/v1/*. Gestión editorial vía endpoints nativos: /wp/v2/cdn_servicio, cdn_testimonio, cdn_faq, cdn_area. Usa autenticación Basic con Application Password (variables wpUser / appPass).",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{ "key": "username", "value": "{{wpUser}}", "type": "string" },
+			{ "key": "password", "value": "{{appPass}}", "type": "string" }
+		]
+	},
+	"item": [
+		{
+			"name": "0. Índice de la API",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": { "raw": "{{baseUrl}}/wp-json", "host": ["{{baseUrl}}"], "path": ["wp-json"] },
+				"description": "Descubre las rutas disponibles de la REST API de WordPress."
+			}
+		},
+		{
+			"name": "1. Sitio (hero, contacto, redes y ubicaciones)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": { "raw": "{{baseUrl}}/wp-json/cdn/v1/sitio", "host": ["{{baseUrl}}"], "path": ["wp-json", "cdn", "v1", "sitio"] },
+				"description": "Endpoint público de lectura. Devuelve hero, datos de contacto, redes y las ubicaciones/puntos de atención."
+			}
+		},
+		{
+			"name": "2. Nosotros (sección dinámica)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": { "raw": "{{baseUrl}}/wp-json/cdn/v1/nosotros", "host": ["{{baseUrl}}"], "path": ["wp-json", "cdn", "v1", "nosotros"] },
+				"description": "Contenido de la sección Nosotros: párrafos (lead), propósito, a quién está dirigido, método, cifras destacadas y alianzas."
+			}
+		},
+		{
+			"name": "3. Servicios (todas las áreas)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": { "raw": "{{baseUrl}}/wp-json/cdn/v1/servicios", "host": ["{{baseUrl}}"], "path": ["wp-json", "cdn", "v1", "servicios"] },
+				"description": "Tarjetas de servicio listas para renderizar (imagen, título, descripción, área con color)."
+			}
+		},
+		{
+			"name": "4. Servicios filtrados por área",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/wp-json/cdn/v1/servicios?area=gestion",
+					"host": ["{{baseUrl}}"],
+					"path": ["wp-json", "cdn", "v1", "servicios"],
+					"query": [{ "key": "area", "value": "gestion", "description": "Slug de la taxonomía cdn_area (acompanamiento, gestion, eficiencia, vinculacion)" }]
+				},
+				"description": "Filtra servicios por slug de área usando el parámetro de consulta ?area=."
+			}
+		},
+		{
+			"name": "5. Testimonios (carrusel)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": { "raw": "{{baseUrl}}/wp-json/cdn/v1/testimonios", "host": ["{{baseUrl}}"], "path": ["wp-json", "cdn", "v1", "testimonios"] },
+				"description": "Testimonios para el carrusel con nombre, cargo, empresa, valoración y texto."
+			}
+		},
+		{
+			"name": "6. Preguntas frecuentes (FAQ)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": { "raw": "{{baseUrl}}/wp-json/cdn/v1/faqs", "host": ["{{baseUrl}}"], "path": ["wp-json", "cdn", "v1", "faqs"] },
+				"description": "Preguntas frecuentes ordenadas para el acordeón."
+			}
+		},
+		{
+			"name": "7. Áreas (taxonomía cdn_area)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": { "raw": "{{baseUrl}}/wp-json/wp/v2/cdn_area", "host": ["{{baseUrl}}"], "path": ["wp-json", "wp", "v2", "cdn_area"] },
+				"description": "Lista las áreas de servicio registradas como taxonomía (incluye el color en el meta cdn_color)."
+			}
+		},
+		{
+			"name": "8. CREAR servicio (POST)",
+			"request": {
+				"method": "POST",
+				"header": [{ "key": "Content-Type", "value": "application/json" }],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"Nuevo servicio de prueba\",\n  \"status\": \"publish\",\n  \"excerpt\": \"Descripción breve del servicio creado desde Postman.\",\n  \"content\": \"Detalle ampliado del servicio.\"\n}"
+				},
+				"url": { "raw": "{{baseUrl}}/wp-json/wp/v2/cdn_servicio", "host": ["{{baseUrl}}"], "path": ["wp-json", "wp", "v2", "cdn_servicio"] },
+				"description": "Crea un CPT cdn_servicio mediante el endpoint nativo de WordPress (requiere auth). El equipo editorial gestiona así las tarjetas."
+			}
+		},
+		{
+			"name": "9. ACTUALIZAR servicio (PUT)",
+			"request": {
+				"method": "PUT",
+				"header": [{ "key": "Content-Type", "value": "application/json" }],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"Nuevo servicio de prueba (editado)\",\n  \"status\": \"publish\"\n}"
+				},
+				"url": { "raw": "{{baseUrl}}/wp-json/wp/v2/cdn_servicio/{{servicioId}}", "host": ["{{baseUrl}}"], "path": ["wp-json", "wp", "v2", "cdn_servicio", "{{servicioId}}"] },
+				"description": "Actualiza el título/estado de un servicio existente (usa la variable servicioId)."
+			}
+		},
+		{
+			"name": "10. ELIMINAR servicio (DELETE)",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": { "raw": "{{baseUrl}}/wp-json/wp/v2/cdn_servicio/{{servicioId}}", "host": ["{{baseUrl}}"], "path": ["wp-json", "wp", "v2", "cdn_servicio", "{{servicioId}}"] },
+				"description": "Elimina (papelera) el servicio indicado por servicioId."
+			}
+		},
+		{
+			"name": "11. CREAR testimonio con metadatos (POST)",
+			"request": {
+				"method": "POST",
+				"header": [{ "key": "Content-Type", "value": "application/json" }],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"Persona de Prueba\",\n  \"status\": \"publish\",\n  \"content\": \"Testimonio de ejemplo creado desde Postman.\",\n  \"cargo\": \"Fundadora\",\n  \"empresa\": \"Empresa de Prueba\",\n  \"nota\": \"5\"\n}"
+				},
+				"url": { "raw": "{{baseUrl}}/wp-json/wp/v2/cdn_testimonio", "host": ["{{baseUrl}}"], "path": ["wp-json", "wp", "v2", "cdn_testimonio"] },
+				"description": "Crea un testimonio incluyendo los metadatos cargo/empresa/nota, expuestos en la REST API mediante register_post_meta."
+			}
+		},
+		{
+			"name": "12. CREAR pregunta frecuente (POST)",
+			"request": {
+				"method": "POST",
+				"header": [{ "key": "Content-Type", "value": "application/json" }],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"¿Pregunta creada desde Postman?\",\n  \"status\": \"publish\",\n  \"content\": \"Sí, así se gestiona el contenido con la API.\",\n  \"grupo\": \"General\",\n  \"orden\": \"99\"\n}"
+				},
+				"url": { "raw": "{{baseUrl}}/wp-json/wp/v2/cdn_faq", "host": ["{{baseUrl}}"], "path": ["wp-json", "wp", "v2", "cdn_faq"] },
+				"description": "Crea una FAQ con sus metadatos grupo y orden."
+			}
+		},
+		{
+			"name": "13. Contacto: captcha inválido (espera 400)",
+			"request": {
+				"method": "POST",
+				"header": [{ "key": "Content-Type", "value": "application/x-www-form-urlencoded" }],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{ "key": "nombre", "value": "Camilo Gonzalez", "type": "text" },
+						{ "key": "correo", "value": "camilo@example.com", "type": "text" },
+						{ "key": "telefono", "value": "+56 9 1234 5678", "type": "text" },
+						{ "key": "servicio", "value": "Diagnóstico Empresarial", "type": "text" },
+						{ "key": "mensaje", "value": "Quisiera agendar una asesoría gratuita para mi negocio.", "type": "text" },
+						{ "key": "cdn_cap_a", "value": "2", "type": "text" },
+						{ "key": "cdn_cap_b", "value": "3", "type": "text" },
+						{ "key": "cdn_cap_salt", "value": "salt-de-prueba", "type": "text" },
+						{ "key": "cdn_cap_t", "value": "1700000000", "type": "text" },
+						{ "key": "cdn_cap_tok", "value": "token-invalido", "type": "text" },
+						{ "key": "cdn_cap_r", "value": "5", "type": "text" }
+					]
+				},
+				"url": { "raw": "{{baseUrl}}/wp-json/cdn/v1/contacto", "host": ["{{baseUrl}}"], "path": ["wp-json", "cdn", "v1", "contacto"] },
+				"description": "Envía con un captcha/token inválido: el servidor responde 400 captcha_invalido. Demuestra la validación de seguridad. El flujo de éxito se ejerce desde el formulario de la web (los tokens HMAC se generan por sesión)."
+			}
+		},
+		{
+			"name": "14. Contacto: honeypot relleno (respuesta simulada 200)",
+			"request": {
+				"method": "POST",
+				"header": [{ "key": "Content-Type", "value": "application/x-www-form-urlencoded" }],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{ "key": "website", "value": "http://spam-bot.example", "type": "text" },
+						{ "key": "nombre", "value": "Bot", "type": "text" },
+						{ "key": "correo", "value": "bot@example.com", "type": "text" },
+						{ "key": "mensaje", "value": "Mensaje automático de prueba de honeypot.", "type": "text" }
+					]
+				},
+				"url": { "raw": "{{baseUrl}}/wp-json/cdn/v1/contacto", "host": ["{{baseUrl}}"], "path": ["wp-json", "cdn", "v1", "contacto"] },
+				"description": "Si un bot rellena el campo honeypot (website) la API responde un éxito falso SIN guardar el mensaje: así el bot no descubre el filtro."
+			}
+		}
+	]
+}
