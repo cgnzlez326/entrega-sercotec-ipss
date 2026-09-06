@@ -186,7 +186,3 @@ Convención de commits en español, descriptivos (ver `docs/BUENAS_PRACTICAS.md`
 - `docs/DECISIONES.md` — decisiones técnicas y problemas complejos resueltos.
 - `REGISTRO-PROYECTO.md` — bitácora de instalación y avance.
 - `postman/` — colección de Postman para gestionar y probar el CMS (requisito #3).
-
-## 9. Licencia y atribución
-Proyecto académico. Los textos y gráficos institucionales de SERCOTEC se usan con fines
-educativos; marca y materiales pertenecen a SERCOTEC.
