@@ -160,6 +160,9 @@ fetch("/wp-json/cdn/v1/servicios?area=gestion")
 - Imágenes WebP generadas con GD (`bin/convertir-webp.php`) + SVG para íconos/logo.
 - `loading="lazy"` y `decoding="async"` en imágenes, `fetchpriority="high"` solo en hero.
 - CSS/JS minificados (`bin/minificar.php`) y servidos como `.min`.
+- Los `.min` son **artefactos generados y no se versionan en git**: se regeneran con
+  `C:\xampp\php\php.exe bin\minificar.php`. El theme sirve la fuente sin minificar si el `.min`
+  no existe, por lo que el repositorio funciona tal cual tras clonar.
 - JS diferido (`defer`) y sin librerías externas pesadas.
 - Cache de recursos + gzip vía `.htaccess` (theme `assets/` y `uploads/`).
 
