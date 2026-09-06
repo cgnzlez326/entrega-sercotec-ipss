@@ -1,0 +1,49 @@
+# WordPress core (se descarga, no se versiona)
+/wp-admin/
+/wp-includes/
+/wp-content/index.php
+/wp-content/plugins/akismet/
+/wp-content/plugins/hello.php
+/wp-content/themes/twenty*/
+wp-activate.php
+wp-blog-header.php
+wp-comments-post.php
+wp-config-sample.php
+wp-cron.php
+wp-links-opml.php
+wp-load.php
+wp-login.php
+wp-mail.php
+wp-settings.php
+wp-signup.php
+wp-trackback.php
+xmlrpc.php
+index.php
+license.txt
+readme.html
+wp-*.php
+*.php
+!wp-content/themes/cdn-santiago/**/*.php
+!wp-content/plugins/cdn-contenidos/**/*.php
+!wp-content/mu-plugins/cdn-habilitaciones.php
+!bin/**/*.php
+
+# Seguridad: nunca versionar credenciales ni BD
+wp-config.php
+database.sql
+*.sql
+/.htaccess
+REGISTRO-PROYECTO.md
+
+# Contenido subido por usuarios y artefactos
+wp-content/uploads/
+wp-content/upgrade/
+wp-content/cache/
+*.log
+
+# Sistema
+Thumbs.db
+.DS_Store
+.vscode/
+.idea/
+node_modules/

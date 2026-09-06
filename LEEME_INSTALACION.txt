@@ -1,0 +1,76 @@
+========================================================================
+LEEME — INSTALACION DEL SITIO "CENTRO DE DESARROLLO DE NEGOCIOS SERCOTEC
+SANTIAGO" (Entrega 3 Frontend)
+========================================================================
+
+Requisitos:
+- XAMPP con Apache y MySQL (MariaDB) en Windows.
+- MySQL con usuario "root" SIN contrasena (configuracion por defecto de
+  XAMPP). Si tu root tiene contrasena, usa phpMyAdmin (paso 3B).
+
+------------------------------------------------------------------------
+PASO 1 - Descomprimir
+------------------------------------------------------------------------
+Descomprime este ZIP dentro de C:\xampp\htdocs\ de modo que quede:
+
+    C:\xampp\htdocs\sercotec-cdn\
+
+(Si la carpeta destino ya existe, reemplaza su contenido.)
+
+------------------------------------------------------------------------
+PASO 2 - Importar la base de datos
+------------------------------------------------------------------------
+Asegurate de que Apache y MySQL esten iniciados en el panel de XAMPP.
+
+Opcion A (automatica): doble clic en el archivo
+    sercotec-cdn\bin\importar-bd.bat
+
+Opcion B (manual / con contrasena en MySQL): abre phpMyAdmin en
+    http://localhost/phpmyadmin
+1) Crea una base de datos llamada  sercotec_cdn
+   (juego de caracteres: utf8mb4 / utf8mb4_unicode_ci).
+2) Selecciona esa base y usa la pestana "Importar".
+3) Elige el archivo  sercotec-cdn\database.sql  y pulsa "Continuar".
+
+NOTA: database.sql ya crea la base si no existe y carga TODO el contenido
+(servicios, testimonios, preguntas, ubicaciones y ajustes).
+
+------------------------------------------------------------------------
+PASO 3 - Abrir el sitio
+------------------------------------------------------------------------
+Abre en el navegador:
+
+    http://localhost/sercotec-cdn
+
+Si el sitio carga y las secciones "Nosotros", "Servicios", "Testimonios",
+"Preguntas frecuentes" y "Ubicaciones" aparecen con contenido, la instalacion
+fue correcta.
+
+Administracion (WordPress):
+    http://localhost/sercotec-cdn/wp-admin
+    Usuario : admin
+    Clave   : CN-Santiago!76669590be   (cambiala tras la revision)
+
+------------------------------------------------------------------------
+SOLUCION DE PROBLEMAS
+------------------------------------------------------------------------
+- Pagina en blanco en las secciones dinamicas: comprueba que Apache este
+  iniciado y abre http://localhost/sercotec-cdn/wp-json/cdn/v1/servicios
+  (debe responder JSON). Si no, vuelve a guardar Permalinks en
+  Ajustes > Enlaces permanentes > "Nombre de la entrada".
+- Imagenes grandes / error al subir: PHP usa la extension GD. Habilitala en
+  C:\xampp\php\php.ini (quita el ";" a  extension=gd ) y reinicia Apache.
+- Los mensajes del formulario de contacto se guardan en el menu
+  "Mensajes de contacto" del panel wp-admin.
+- Endpoints de la API (para probar con Postman):
+    GET  /wp-json/cdn/v1/sitio
+    GET  /wp-json/cdn/v1/nosotros
+    GET  /wp-json/cdn/v1/servicios?area=acompanamiento
+    GET  /wp-json/cdn/v1/testimonios
+    GET  /wp-json/cdn/v1/faqs
+    POST /wp-json/cdn/v1/contacto
+    Coleccion Postman incluida en la carpeta  postman/.
+
+Proyecto academico. Marca y contenidos institucionales de SERCOTEC usados
+con fines educativos.
+========================================================================
