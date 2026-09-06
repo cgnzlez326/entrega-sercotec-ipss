@@ -16,7 +16,7 @@ programación).
 2. Entra a: `http://localhost/sercotec-cdn/wp-admin` (o `/wp-login.php`).
 3. Credenciales:
    - Usuario: `admin`
-   - Clave: ver `REGISTRO-PROYECTO.md` (en el ZIP docente, ver `LEEME_INSTALACION.txt`).
+   - Clave: ver `REGISTRO-PROYECTO.md` (en el ZIP, ver `LEEME_INSTALACION.txt`).
 4. Menú del plugin **CDN Contenidos** no existe como tal: cada tipo aparece como su propio
    menú en la barra lateral (Servicios, Testimonios, Preguntas frecuentes, etc.).
 
