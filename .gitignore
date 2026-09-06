@@ -43,6 +43,10 @@ wp-content/cache/
 wp-content/languages/
 *.log
 
+# Assets minificados (generados con bin/minificar.php; no se versionan)
+wp-content/themes/cdn-santiago/assets/css/*.min.css
+wp-content/themes/cdn-santiago/assets/js/*.min.js
+
 # Sistema
 Thumbs.db
 .DS_Store
