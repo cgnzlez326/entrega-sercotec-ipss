@@ -75,7 +75,7 @@ add_action( 'wp_enqueue_scripts', 'cdn_styles' );
  * Script principal (defer). Se sirve minificado si existe.
  */
 function cdn_scripts() {
-	$min = file_exists( CDN_THEME_DIR . '/assets/js/cdn-app.min.js' );
+	$min = file_exists( CDN_THEME_DIR . '/assets/js/cdn-app.min.js' ) && ! ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG );
 	$js  = $min ? 'js/cdn-app.min.js' : 'js/cdn-app.js';
 	wp_enqueue_script(
 		'cdn-app',
