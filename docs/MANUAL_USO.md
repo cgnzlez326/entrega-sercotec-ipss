@@ -195,6 +195,3 @@ hace falta.
   `LEEME_INSTALACION.txt` (ZIP docente).
 
 ---
-
-*Manual generado para el proyecto académico. Marca y contenidos institucionales de SERCOTEC
-usados con fines educativos.*
