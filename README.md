@@ -13,7 +13,7 @@ one-page que integra un CMS (WordPress) y consume su propia **API REST** para po
 dinámica las secciones **Nosotros**, **Servicios** y **Preguntas frecuentes (FAQ)**, junto con
 testimonios en carrusel, ubicaciones y un formulario de contacto seguro.
 
-Requisitos cubiertos (encargo `e3.md`): ver checklist en `docs/DECISIONES.md` y `REGISTRO-PROYECTO.md`.
+Requisitos cubiertos: ver checklist en `docs/DECISIONES.md` y `REGISTRO-PROYECTO.md`.
 
 ## 2. Arquitectura
 
