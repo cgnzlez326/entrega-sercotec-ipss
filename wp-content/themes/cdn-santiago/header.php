@@ -30,6 +30,7 @@
 			<li><a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', (string) cdn_ajuste( 'contacto_telefono' ) ) ); ?>"><?php echo cdn_icono( 'telefono' ); ?><span><?php echo esc_html( cdn_ajuste( 'contacto_telefono' ) ); ?></span></a></li>
 			<li><a href="mailto:<?php echo esc_attr( cdn_ajuste( 'contacto_correo' ) ); ?>"><?php echo cdn_icono( 'correo' ); ?><span><?php echo esc_html( cdn_ajuste( 'contacto_correo' ) ); ?></span></a></li>
 		</ul>
+		<?php cdn_barra_monedas(); ?>
 	</div>
 </div>
 

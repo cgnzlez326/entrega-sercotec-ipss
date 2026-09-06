@@ -215,3 +215,118 @@ function cdn_icono( $nombre ) {
 	}
 	return '';
 }
+
+/**
+ * Tipo de cambio del día (indicadores USD, EUR, UF y UTM).
+ *
+ * Consume la API pública "Todas las monedas" de Gael Cloud (Banco Central
+ * de Chile) una sola vez al día: la respuesta se cachea en un transient de
+ * 24 h. Si la API no responde se devuelven valores de referencia marcados,
+ * para que la cabecera nunca quede vacía.
+ *
+ * @return array
+ */
+function cdn_monedas_gael() {
+	static $resuelto = null;
+
+	if ( null !== $resuelto ) {
+		return $resuelto;
+	}
+
+	$clave = 'cdn_monedas_gael_1';
+	$cache = get_transient( $clave );
+	if ( is_array( $cache ) && ! empty( $cache ) ) {
+		$resuelto = $cache;
+		return $cache;
+	}
+
+	$referencia = array(
+		'USD' => array( 'Codigo' => 'USD', 'Nombre' => 'Dólar americano', 'Valor' => '965,00', 'Referencia' => true ),
+		'EUR' => array( 'Codigo' => 'EUR', 'Nombre' => 'Euro', 'Valor' => '1.048,00', 'Referencia' => true ),
+		'UF'  => array( 'Codigo' => 'UF', 'Nombre' => 'Unidad de Fomento', 'Valor' => '40.881,68', 'Referencia' => true ),
+		'UTM' => array( 'Codigo' => 'UTM', 'Nombre' => 'Unidad Tributaria Mensual', 'Valor' => '69.265,00', 'Referencia' => true ),
+	);
+	$orden = array( 'USD', 'EUR', 'UF', 'UTM' );
+
+	$respuesta = wp_remote_get(
+		'https://api.gael.cloud/general/public/monedas',
+		array(
+			'timeout'     => 6,
+			'user-agent'  => 'CDN Santiago (WordPress) ' . home_url( '/' ),
+			'headers'     => array( 'Accept' => 'application/json' ),
+			'httpversion' => '1.1',
+		)
+	);
+
+	$disponibles = array();
+	if ( ! is_wp_error( $respuesta ) && 200 === (int) wp_remote_retrieve_response_code( $respuesta ) ) {
+		$json = json_decode( wp_remote_retrieve_body( $respuesta ), true );
+		if ( is_array( $json ) ) {
+			foreach ( $json as $moneda ) {
+				if ( ! empty( $moneda['Codigo'] ) ) {
+					$disponibles[ trim( (string) $moneda['Codigo'] ) ] = $moneda;
+				}
+			}
+		}
+	}
+
+	$salida = array();
+	foreach ( $orden as $codigo ) {
+		$item = $referencia[ $codigo ];
+		if ( isset( $disponibles[ $codigo ] ) && 'ND' !== trim( (string) $disponibles[ $codigo ]['Valor'] ) ) {
+			$item = array(
+				'Codigo' => $codigo,
+				'Nombre' => isset( $disponibles[ $codigo ]['Nombre'] ) ? $disponibles[ $codigo ]['Nombre'] : $codigo,
+				'Valor'  => trim( (string) $disponibles[ $codigo ]['Valor'] ),
+			);
+		}
+		$salida[ $codigo ] = $item;
+	}
+
+	set_transient( $clave, $salida, DAY_IN_SECONDS );
+	$resuelto = $salida;
+	return $salida;
+}
+
+/**
+ * Normaliza y formatea un valor monetario a es-CL (p. ej. "40881,68" → "40.881,68").
+ *
+ * @param string $valor Valor crudo de la API.
+ * @return string
+ */
+function cdn_monedas_valor( $valor ) {
+	$limpio = str_replace( '.', '', trim( (string) $valor ) );
+	$limpio = str_replace( ',', '.', $limpio );
+	if ( '' === $limpio || ! is_numeric( $limpio ) ) {
+		return '';
+	}
+	return number_format( (float) $limpio, 2, ',', '.' );
+}
+
+/**
+ * Widget de tipo de cambio para la barra superior (cabecera).
+ */
+function cdn_barra_monedas() {
+	$monedas = cdn_monedas_gael();
+	if ( empty( $monedas ) ) {
+		return;
+	}
+	echo '<div class="barra-monedas" role="group" aria-label="Tipo de cambio del día, Banco Central de Chile vía API Gael Cloud">';
+	echo '<span class="barra-monedas__titulo">Tipo de cambio</span>';
+	echo '<ul class="barra-monedas__lista">';
+	foreach ( $monedas as $moneda ) {
+		$referencia = ! empty( $moneda['Referencia'] );
+		$nombre     = isset( $moneda['Nombre'] ) ? (string) $moneda['Nombre'] : (string) $moneda['Codigo'];
+		$titulo     = $referencia ? $nombre . ' (valor de referencia)' : $nombre;
+		$valor      = cdn_monedas_valor( isset( $moneda['Valor'] ) ? $moneda['Valor'] : '' );
+		echo '<li class="barra-monedas__item' . ( $referencia ? ' barra-monedas__item--referencia' : '' ) . '">';
+		echo '<abbr class="barra-monedas__codigo" title="' . esc_attr( $titulo ) . '">' . esc_html( $moneda['Codigo'] ) . '</abbr>';
+		if ( '' !== $valor ) {
+			echo '<span class="barra-monedas__valor">$ ' . esc_html( $valor ) . '</span>';
+		}
+		echo '</li>';
+	}
+	echo '</ul>';
+	echo '<a class="barra-monedas__fuente" href="https://api.gael.cloud/general/public/monedas" target="_blank" rel="noopener noreferrer">api.gael.cloud</a>';
+	echo '</div>';
+}

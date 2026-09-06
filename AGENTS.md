@@ -66,6 +66,9 @@ WP core, uploads y wp-config.php quedan EXCLUIDOS de git pero DENTRO del ZIP.
   6 testimonios, 10 FAQs, Nosotros, 6 ubicaciones, App Password Postman).
 - GD habilitado y Apache reiniciado (probe: bool true). Assets min .min + WebP generados.
 - REST /cdn/v1/* responden 200; contacto 201/400/200(honeypot) probados.
+- Widget "Tipo de cambio" en barra superior (cabecera): consume API pública Gael Cloud
+  `/general/public/monedas` 1 vez/día vía transient 24h (`cdn_monedas_gael_1`); muestra USD, EUR, UF,
+  UTM con valores de referencia marcados si la API no responde. Funciones en `functions.php` del theme.
 - Siguiente: git init en C:\xampp\htdocs\sercotec-cdn, ramas feature + gh PR (NO merge, NO push main),
   database.sql (mysqldump) y ZIP docente final.
 - Credenciales reales SOLO en REGISTRO-PROYECTO.md (local, gitignored) y LEEME del ZIP.
