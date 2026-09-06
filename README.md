@@ -69,6 +69,14 @@ Taxonomía `cdn_area` (4 áreas) con color asociado; se usa para filtrar servici
 Además quedan expuestos los endpoints nativos `wp/v2/cdn_*` para la gestión editorial CRUD
 (ver colección de Postman).
 
+### Widget de tipo de cambio (API externa Gael Cloud)
+La barra superior de la cabecera muestra **USD, EUR, UF y UTM** consumiendo la API pública
+`GET https://api.gael.cloud/general/public/monedas` (valores del Banco Central de Chile). El theme
+consume ese servicio **una sola vez por día**: la respuesta se guarda en un *transient* de 24 h
+(`cdn_monedas_gael_1`) mediante las funciones `cdn_monedas_gael()`, `cdn_monedas_valor()` y
+`cdn_barra_monedas()` definidas en `wp-content/themes/cdn-santiago/functions.php`. Si la API no
+responde, se muestran valores de referencia marcados como tales para que la cabecera no quede vacía.
+
 ## 3. Instalación (paso a paso)
 
 Prerrequisitos: **XAMPP** (Apache + MySQL + PHP ≥ 7.4 con `extension=gd`), Windows.
