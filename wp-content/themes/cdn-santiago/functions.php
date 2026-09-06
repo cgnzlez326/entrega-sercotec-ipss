@@ -66,7 +66,7 @@ add_action( 'after_setup_theme', 'cdn_setup' );
  */
 function cdn_styles() {
 	$min   = file_exists( CDN_THEME_DIR . '/assets/css/main.min.css' ) && ! ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG );
-	$css   = $min ? '/assets/css/main.min.css' : '/assets/css/main.css';
+	$css   = $min ? 'css/main.min.css' : 'css/main.css';
 	wp_enqueue_style( 'cdn-main', cdn_asset( $css ), array(), $min ? CDN_THEME_VERSION : CDN_THEME_VERSION . '.dev' );
 }
 add_action( 'wp_enqueue_scripts', 'cdn_styles' );
@@ -76,7 +76,7 @@ add_action( 'wp_enqueue_scripts', 'cdn_styles' );
  */
 function cdn_scripts() {
 	$min = file_exists( CDN_THEME_DIR . '/assets/js/cdn-app.min.js' );
-	$js  = $min ? '/assets/js/cdn-app.min.js' : '/assets/js/cdn-app.js';
+	$js  = $min ? 'js/cdn-app.min.js' : 'js/cdn-app.js';
 	wp_enqueue_script(
 		'cdn-app',
 		cdn_asset( $js ),
