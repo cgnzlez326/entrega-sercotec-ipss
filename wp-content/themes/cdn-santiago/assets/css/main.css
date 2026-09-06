@@ -1427,6 +1427,13 @@ button {
 	transition: background var(--transicion);
 }
 
+.toolbar-accesibilidad__sigla {
+	font-size: 1.05rem;
+	font-weight: 800;
+	letter-spacing: 0.03em;
+	line-height: 1;
+}
+
 .toolbar-accesibilidad__boton:hover {
 	background: var(--azul);
 }
